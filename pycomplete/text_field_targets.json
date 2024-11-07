@@ -1,0 +1,198 @@
+[
+  {
+    "role": 73,
+    "interfaces": [
+      "Accessible",
+      "Collection",
+      "Component",
+      "EditableText",
+      "Hypertext",
+      "Hyperlink",
+      "Text"
+    ],
+    "path": [
+      {
+        "role": 14,
+        "name": "main",
+        "index": 0,
+        "role_name": "desktop frame"
+      },
+      {
+        "role": 75,
+        "name": "Firefox",
+        "index": -1,
+        "role_name": "application"
+      },
+      {
+        "role": 23,
+        "name": "Generalizing Text Field Recognition - Claude \u2014 Mozilla Firefox",
+        "index": 0,
+        "role_name": "frame"
+      },
+      {
+        "role": 39,
+        "name": null,
+        "index": 22,
+        "role_name": "panel"
+      },
+      {
+        "role": 28,
+        "name": null,
+        "index": 0,
+        "role_name": "internal frame"
+      },
+      {
+        "role": 95,
+        "name": "Generalizing Text Field Recognition - Claude",
+        "index": 0,
+        "role_name": "document web"
+      },
+      {
+        "role": 39,
+        "name": null,
+        "index": 0,
+        "role_name": "panel"
+      },
+      {
+        "role": 85,
+        "name": "Write your prompt to Claude",
+        "index": 0,
+        "role_name": "section"
+      }
+    ],
+    "name": "unnamed",
+    "attributes": {
+      "display": "block",
+      "tag": "p"
+    }
+  },
+  {
+    "role": 61,
+    "interfaces": [
+      "Accessible",
+      "Component",
+      "EditableText",
+      "Text"
+    ],
+    "path": [
+      {
+        "role": 75,
+        "name": "kate",
+        "index": -1,
+        "role_name": "application"
+      },
+      {
+        "role": 23,
+        "name": "Untitled *",
+        "index": 0,
+        "role_name": "frame"
+      },
+      {
+        "role": 23,
+        "name": null,
+        "index": 0,
+        "role_name": "frame"
+      },
+      {
+        "role": 23,
+        "name": null,
+        "index": 1,
+        "role_name": "frame"
+      },
+      {
+        "role": 61,
+        "name": "Untitled",
+        "index": 0,
+        "role_name": "text"
+      }
+    ],
+    "name": "Untitled",
+    "attributes": {}
+  },
+  {
+    "role": 61,
+    "interfaces": [
+      "Accessible",
+      "Component",
+      "EditableText",
+      "Text"
+    ],
+    "path": [
+      {
+        "role": 75,
+        "name": "kate",
+        "index": -1,
+        "role_name": "application"
+      },
+      {
+        "role": 23,
+        "name": "Untitled *",
+        "index": 0,
+        "role_name": "frame"
+      },
+      {
+        "role": 23,
+        "name": null,
+        "index": 0,
+        "role_name": "frame"
+      },
+      {
+        "role": 23,
+        "name": null,
+        "index": 1,
+        "role_name": "frame"
+      },
+      {
+        "role": 61,
+        "name": "Untitled",
+        "index": 0,
+        "role_name": "text"
+      }
+    ],
+    "name": "Untitled",
+    "attributes": {}
+  },
+  {
+    "role": 61,
+    "interfaces": [
+      "Accessible",
+      "Component",
+      "EditableText",
+      "Text"
+    ],
+    "path": [
+      {
+        "role": 75,
+        "name": "kate",
+        "index": -1,
+        "role_name": "application"
+      },
+      {
+        "role": 23,
+        "name": "Untitled *",
+        "index": 0,
+        "role_name": "frame"
+      },
+      {
+        "role": 23,
+        "name": null,
+        "index": 0,
+        "role_name": "frame"
+      },
+      {
+        "role": 23,
+        "name": null,
+        "index": 1,
+        "role_name": "frame"
+      },
+      {
+        "role": 61,
+        "name": "Untitled",
+        "index": 0,
+        "role_name": "text"
+      }
+    ],
+    "name": "Untitled",
+    "attributes": {}
+  }
+]
