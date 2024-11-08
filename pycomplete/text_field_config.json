@@ -1,0 +1,6 @@
+{
+  "trigger_key": {
+    "event_string": "Tab",
+    "key_code": 65289
+  }
+}
