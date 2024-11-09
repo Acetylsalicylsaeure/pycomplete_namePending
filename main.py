@@ -1,10 +1,11 @@
-from src.pycomplete.app.predictor_app import TextPredictorApp
 import argparse
 import sys
 import logging
 import os
 import json
-import subprocess  # Added missing import
+import subprocess
+
+logger = logging.getLogger(__name__)
 
 
 def check_dependencies():
@@ -37,32 +38,11 @@ def check_dependencies():
     return True
 
 
-def init_logging(debug_level):
-    """Initialize logging configuration"""
-    log_level = logging.DEBUG if debug_level > 0 else logging.INFO
-
-    # Create logs directory if it doesn't exist
-    log_dir = os.path.expanduser(
-        '~/.local/share/pycomplete/logs')  # Updated path
-    os.makedirs(log_dir, exist_ok=True)
-
-    # Set up logging to both file and console
-    logging.basicConfig(
-        level=log_level,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler(os.path.join(
-                log_dir, 'pycomplete.log')),  # Updated filename
-            logging.StreamHandler()
-        ]
-    )
-
-
 def get_config_path():
     """Get the path to the config file, creating default if needed"""
     # Use XDG config directory if available
     config_dir = os.getenv('XDG_CONFIG_HOME', os.path.expanduser('~/.config'))
-    config_dir = os.path.join(config_dir, 'pycomplete')  # Updated path
+    config_dir = os.path.join(config_dir, 'pycomplete')
 
     # Create config directory if it doesn't exist
     os.makedirs(config_dir, exist_ok=True)
@@ -83,36 +63,71 @@ def get_config_path():
     return config_path
 
 
+def setup_logging(debug_level: int):
+    """Set up logging configuration"""
+    log_levels = {
+        0: logging.WARNING,
+        1: logging.INFO,
+        2: logging.DEBUG
+    }
+    log_level = log_levels.get(debug_level, logging.DEBUG)
+
+    # Create logs directory if it doesn't exist
+    log_dir = os.path.expanduser('~/.local/share/pycomplete/logs')
+    os.makedirs(log_dir, exist_ok=True)
+
+    # Configure logging
+    logging.basicConfig(
+        level=log_level,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler(os.path.join(log_dir, 'pycomplete.log')),
+            logging.StreamHandler()
+        ]
+    )
+
+    # Set level for specific loggers
+    logging.getLogger('src.pycomplete').setLevel(log_level)
+
+    if debug_level >= 2:
+        logging.getLogger('asyncio').setLevel(logging.DEBUG)
+
+
+def parse_args():
+    """Parse command line arguments"""
+    parser = argparse.ArgumentParser(description='PyComplete Text Predictor')
+    parser.add_argument('-d', '--debug', type=int, default=0,
+                        help='Debug level (0=WARNING, 1=INFO, 2=DEBUG)')
+    parser.add_argument('--config', type=str,
+                        help='Path to config file (default: ~/.config/pycomplete/text_field_config.json)')
+    return parser.parse_args()
+
+
 if __name__ == "__main__":
     # Parse command line arguments
-    parser = argparse.ArgumentParser(
-        description='PyComplete Text Predictor')  # Updated description
-    parser.add_argument('-d', '--debug', action='store_true',
-                        help='Enable debug logging')
-    parser.add_argument('--config', type=str,
-                        # Updated help text
-                        help='Path to config file (default: ~/.config/pycomplete/text_field_config.json)')
-    args = parser.parse_args()
+    args = parse_args()
+
+    # Set up logging first
+    setup_logging(args.debug)
 
     try:
         # Check dependencies first
         if not check_dependencies():
             sys.exit(1)
 
-        # Initialize logging
-        init_logging(1 if args.debug else 0)
-        logger = logging.getLogger(__name__)
-
         # Get config path
         config_path = args.config if args.config else get_config_path()
         logger.info(f"Using config file: {config_path}")
 
+        # Import app after logging is configured
+        from src.pycomplete.app.predictor_app import TextPredictorApp
+
         # Start the application
-        logger.info("Starting PyComplete...")  # Updated message
-        app = TextPredictorApp(config_path)
+        logger.info("Starting PyComplete...")
+        app = TextPredictorApp(config_path, debug_level=args.debug)
 
         # Print startup message
-        print("\nPyComplete is running!")  # Updated message
+        print("\nPyComplete is running!")
         print("Type in any supported text field to see predictions.")
         print("Press Tab (or configured key) to accept predictions.")
         print("Press Ctrl+C to exit.")

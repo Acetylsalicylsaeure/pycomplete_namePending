@@ -1,0 +1,36 @@
+.
+├── LICENSE
+├── main.py
+├── README.md
+├── src
+│   └── pycomplete
+│       ├── app
+│       │   ├── __init__.py
+│       │   ├── predictor_app.py
+│       │   └── __pycache__
+│       │       ├── __init__.cpython-312.pyc
+│       │       └── predictor_app.cpython-312.pyc
+│       ├── core
+│       │   ├── accessibility.py
+│       │   ├── config.py
+│       │   ├── __init__.py
+│       │   ├── prediction.py
+│       │   ├── __pycache__
+│       │   │   ├── accessibility.cpython-312.pyc
+│       │   │   ├── config.cpython-312.pyc
+│       │   │   ├── __init__.cpython-312.pyc
+│       │   │   ├── prediction.cpython-312.pyc
+│       │   │   └── text_field.cpython-312.pyc
+│       │   └── text_field.py
+│       ├── __init__.py
+│       ├── __pycache__
+│       │   └── __init__.cpython-312.pyc
+│       └── ui
+│           ├── __init__.py
+│           ├── overlay.py
+│           └── __pycache__
+│               ├── __init__.cpython-312.pyc
+│               └── overlay.cpython-312.pyc
+└── structure.txt
+
+10 directories, 24 files
