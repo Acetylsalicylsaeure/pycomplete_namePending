@@ -381,5 +381,48 @@
       "placeholder-text": "Search projects",
       "display": "inline"
     }
+  },
+  {
+    "role": 61,
+    "interfaces": [
+      "Accessible",
+      "Component",
+      "EditableText",
+      "Text"
+    ],
+    "path": [
+      {
+        "role": 75,
+        "name": "kate",
+        "index": -1,
+        "role_name": "application"
+      },
+      {
+        "role": 23,
+        "name": "Untitled *",
+        "index": 0,
+        "role_name": "frame"
+      },
+      {
+        "role": 23,
+        "name": null,
+        "index": 0,
+        "role_name": "frame"
+      },
+      {
+        "role": 23,
+        "name": null,
+        "index": 1,
+        "role_name": "frame"
+      },
+      {
+        "role": 61,
+        "name": "Untitled",
+        "index": 0,
+        "role_name": "text"
+      }
+    ],
+    "name": "Untitled",
+    "attributes": {}
   }
 ]

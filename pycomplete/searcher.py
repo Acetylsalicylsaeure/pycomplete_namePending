@@ -27,6 +27,11 @@ class TextFieldSearcher:
             pyatspi.ROLE_PARAGRAPH,
             pyatspi.ROLE_DOCUMENT_FRAME,
             pyatspi.ROLE_EDITBAR,  # Changed from ROLE_EDITOR
+            pyatspi.ROLE_TERMINAL,
+            pyatspi.ROLE_VIEWPORT,
+            pyatspi.ROLE_SCROLL_PANE,
+            pyatspi.ROLE_APPLICATION
+
         }
 
         # Define required interfaces for text fields
@@ -42,7 +47,26 @@ class TextFieldSearcher:
             states = obj.getState()
             interfaces = pyatspi.listInterfaces(obj)
 
-            # Get attributes to check for contenteditable
+            # Special handling for terminals - much more permissive
+            if role == pyatspi.ROLE_TERMINAL:
+                # Only check if it's enabled and visible/showing
+                basic_conditions = {
+                    'enabled': states.contains(pyatspi.STATE_ENABLED),
+                    'visible': states.contains(pyatspi.STATE_VISIBLE),
+                    'showing': states.contains(pyatspi.STATE_SHOWING)
+                }
+
+                if basic_conditions['enabled'] and (basic_conditions['visible'] or basic_conditions['showing']):
+                    return {
+                        'role': role,
+                        'interfaces': interfaces,
+                        'path': self.get_simplified_path(obj),
+                        'name': obj.name if obj.name else 'unnamed',
+                        'attributes': {}
+                    }
+                return None
+
+            # Regular text field handling
             attributes = {}
             try:
                 attributes = dict([attr.split(':', 1)
@@ -50,11 +74,19 @@ class TextFieldSearcher:
             except Exception:
                 pass
 
-            # Define multiple conditions that could indicate a text field
+            # Relaxed interface requirements
+            basic_text_interfaces = {
+                'Accessible',  # Most basic interface
+                'Component'    # For position/size info
+            }
+
+            # More permissive conditions
             conditions = {
                 'role_match': role in self.text_field_roles,
-                'has_required_interfaces': all(interface in interfaces for interface in self.required_interfaces),
+                'has_basic_interfaces': all(interface in interfaces for interface in basic_text_interfaces),
+                'has_text_interface': 'Text' in interfaces,
                 'is_editable': (states.contains(pyatspi.STATE_EDITABLE) or
+                                'EditableText' in interfaces or
                                 attributes.get('contenteditable') == 'true'),
                 'not_read_only': not states.contains(pyatspi.STATE_READ_ONLY),
                 'enabled': states.contains(pyatspi.STATE_ENABLED),
@@ -77,11 +109,11 @@ class TextFieldSearcher:
             for key, value in debug_info.items():
                 print(f"  {key}: {value}")
 
-            # An object is considered a text field if it meets certain combinations of conditions
+            # More permissive field detection
             is_text_field = (
                 (conditions['role_match'] or conditions['is_editable']) and
-                conditions['has_required_interfaces'] and
-                conditions['not_read_only'] and
+                conditions['has_basic_interfaces'] and
+                (conditions['has_text_interface'] or role == pyatspi.ROLE_TERMINAL) and
                 conditions['enabled'] and
                 (conditions['visible'] or conditions['showing'])
             )
